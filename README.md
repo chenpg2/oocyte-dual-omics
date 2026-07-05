@@ -77,6 +77,4 @@ for n in 1 2 3 4 5 6 7; do Rscript src/R/Fig$n.R; done
 
 ## Data availability
 
-Raw counts, the constGenes reference panel, and all generated outputs (`results/`,
-high-resolution TIFF) are not tracked here. Sequencing data will be deposited in a public
-archive on publication; contact the corresponding author for access before then.
+
