@@ -1,0 +1,29 @@
+# Data (too large for git)
+rawcount/
+ref/
+
+# Results (regenerable)
+results/
+
+# Manuscript / submission and planning docs (kept local, not part of the code repo)
+submission/
+plan/
+
+# High-resolution rasters and build artifacts (regenerable; too large for git)
+*.tiff
+Rplots.pdf
+*.zip
+
+# OS files
+.DS_Store
+.Rhistory
+.RData
+*.Rproj.user
+
+# Environment
+environment/
+.Rproj.user/
+
+# Claude/OMC state
+.claude/
+.omx/

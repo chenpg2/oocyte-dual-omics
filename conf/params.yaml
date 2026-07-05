@@ -1,0 +1,80 @@
+# Analysis Parameters — Oocyte Dual-Omics Project
+
+seed: 42
+
+# --- Data paths ---
+paths:
+  rawcount_transcriptome: "rawcount/count_transcriptome.csv"
+  rawcount_translatome: "rawcount/count_translatome.csv"
+  metadata: "metadata_hcg.csv"
+  constgenes: "ref/Table 7.XLSX"
+  results: "results"
+
+# --- QC & Filtering ---
+qc:
+  min_counts: 10           # minimum total counts per gene
+  min_samples: 4           # gene must have ≥min_counts in ≥min_samples (within at least one omics)
+  mt_pattern: "^mt-"       # mitochondrial gene prefix (mouse)
+  ribo_pattern: "^Rps|^Rpl" # ribosomal protein gene prefix
+  pca_top_genes: 2000        # number of most variable genes for PCA
+
+# --- Normalization ---
+normalization:
+  constgene_cv_threshold: 0.3  # pre-registered: remove constGenes with CV > this
+  ruvg_k_range: [1, 2, 3]     # RUVg k values to test
+  leave_out_fraction: 0.1     # leave-10%-out cross-validation
+  leave_out_iterations: 100   # number of bootstrap iterations
+
+# --- Baseline Analysis ---
+baseline:
+  deseq2_fdr: 0.05
+  masigpro_degree: 2          # polynomial degree
+  masigpro_q: 0.05            # significance threshold
+  mfuzz_clusters: [6, 8, 10]  # range of cluster numbers to test
+  mfuzz_m: 1.25               # fuzzifier
+
+# --- TTA (Translational Trajectory Analysis) ---
+tta:
+  cluster_range: [5, 6, 7, 8]  # k values to test
+  bootstrap_n: 1000
+  ari_threshold: 0.7           # minimum bootstrap ARI for stable labels
+
+# --- TPI (Temporal Precedence Index) ---
+tpi:
+  fdr_threshold: 0.05          # for per-interval significance test
+  bootstrap_n: 1000
+  gsea_min_set_size: 15
+
+# --- TRD (Translational Rate Dynamics) ---
+trd:
+  mi_window_fdr: 0.05
+  min_genes_per_wave: 50
+
+# --- Cis-Regulatory Grammar ---
+cis_grammar:
+  train_fraction: 0.8
+  cv_folds: 5
+  min_class_size: 100       # collapse clusters smaller than this
+  auc_threshold: 0.65       # minimum macro AUC to report
+
+# --- Known Gene Control Panel ---
+control_genes:
+  - Btg4      # translation-dependent decay
+  - Cnot7     # CCR4-NOT deadenylase
+  - Cnot8     # CCR4-NOT deadenylase
+  - Ccnb1     # cyclin B1, translational activation at GVBD
+  - Cdk1      # cell cycle kinase
+  - Dazl      # RNA-binding protein, translational regulator
+  - Mos       # MAPK kinase, MII arrest
+  - Zp3       # zona pellucida, expected stable/decline
+  - Plat      # tissue plasminogen activator
+  - Gdf9      # oocyte growth factor
+
+# --- Figure Export ---
+figures:
+  format: "pdf"
+  dpi: 300
+  width_single: 85          # mm, single column
+  width_double: 170         # mm, double column
+  font_family: "Arial"
+  font_size_min: 8          # pt
